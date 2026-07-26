@@ -340,7 +340,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     style={{ backgroundColor: rec.winnerColor }}
                   />
                   <div>
-                    <span className="font-bold text-white">{rec.winnerLabel}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-white">{rec.winnerLabel}</span>
+                      {rec.spinnerNameTag && (
+                        <span className="px-1.5 py-0.5 bg-cyan-950 border border-cyan-500/30 text-cyan-300 font-extrabold text-[9px] rounded-md">
+                          Tag: {rec.spinnerNameTag}
+                        </span>
+                      )}
+                    </div>
                     <p className="text-[10px] text-slate-400">
                       Wheel: {rec.wheelTitle} • Mode: {rec.mode}
                     </p>

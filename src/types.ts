@@ -34,6 +34,13 @@ export interface WheelTheme {
   hubColor: string;
 }
 
+export interface UserNameTag {
+  name: string;
+  role?: string;
+  color?: string;
+  icon?: string;
+}
+
 export interface Wheel {
   id: string;
   title: string;
@@ -44,6 +51,7 @@ export interface Wheel {
   updatedAt: number;
   isFavorite?: boolean;
   category?: string;
+  authorNameTag?: string;
 }
 
 export interface SpinRecord {
@@ -55,6 +63,7 @@ export interface SpinRecord {
   winnerColor: string;
   timestamp: number;
   mode: DecisionMode;
+  spinnerNameTag?: string;
 }
 
 export interface AIInsightsData {

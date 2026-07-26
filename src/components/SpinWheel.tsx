@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { WheelOption, WheelTheme } from '../types';
+import { WheelOption, WheelTheme, UserNameTag } from '../types';
 import { sound } from '../utils/sound';
 import { WHEEL_THEMES } from '../data/presets';
-import { Play, RotateCcw, Volume2, VolumeX, Maximize2, Minimize2, Sparkles } from 'lucide-react';
+import { Play, RotateCcw, Volume2, VolumeX, Maximize2, Minimize2, Sparkles, Tag } from 'lucide-react';
 
 interface SpinWheelProps {
   options: WheelOption[];
@@ -11,6 +11,7 @@ interface SpinWheelProps {
   isSpinning: boolean;
   setIsSpinning: (spinning: boolean) => void;
   canvasRefOut?: React.RefObject<HTMLCanvasElement | null>;
+  activeNameTag?: UserNameTag;
 }
 
 export const SpinWheel: React.FC<SpinWheelProps> = ({
@@ -20,6 +21,7 @@ export const SpinWheel: React.FC<SpinWheelProps> = ({
   isSpinning,
   setIsSpinning,
   canvasRefOut,
+  activeNameTag,
 }) => {
   const internalCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasRef = canvasRefOut || internalCanvasRef;
@@ -348,6 +350,31 @@ export const SpinWheel: React.FC<SpinWheelProps> = ({
         isFullscreen ? 'fixed inset-0 z-50 bg-slate-950 p-8' : ''
       }`}
     >
+      {/* Active Spinner Name Tag Header */}
+      {activeNameTag && (
+        <div className="mb-3 flex items-center gap-2 px-3.5 py-1.5 bg-slate-900/90 border border-slate-800 rounded-full shadow-lg backdrop-blur-md animate-fade-in">
+          <div
+            className="w-2.5 h-2.5 rounded-full animate-ping"
+            style={{ backgroundColor: activeNameTag.color || '#06b6d4' }}
+          />
+          <span className="text-[10px] uppercase font-extrabold text-slate-400 tracking-wider">
+            Active Spinner:
+          </span>
+          <span className="text-xs font-black text-white flex items-center gap-1">
+            <Tag className="w-3 h-3 text-cyan-400" />
+            {activeNameTag.name}
+          </span>
+          {activeNameTag.role && (
+            <span
+              className="text-[9px] px-2 py-0.5 font-bold rounded-md text-slate-950"
+              style={{ backgroundColor: activeNameTag.color || '#06b6d4' }}
+            >
+              {activeNameTag.role}
+            </span>
+          )}
+        </div>
+      )}
+
       {/* Canvas Container */}
       <div className="relative group">
         <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 rounded-full blur-xl opacity-75 group-hover:opacity-100 transition duration-500 pointer-events-none" />

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Wheel, ExtraTool } from '../types';
+import { Wheel, ExtraTool, UserNameTag } from '../types';
+import { NameTagBadge } from './NameTagBadge';
 import { sound } from '../utils/sound';
 import {
   Compass,
@@ -23,6 +24,7 @@ interface NavbarProps {
   setActiveTool: (tool: ExtraTool) => void;
   onShareWheel: () => void;
   onExportImage: () => void;
+  onNameTagChange?: (tag: UserNameTag) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -33,6 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   setActiveTool,
   onShareWheel,
   onExportImage,
+  onNameTagChange,
 }) => {
   const [copied, setCopied] = React.useState(false);
   const [showWheelSelector, setShowWheelSelector] = React.useState(false);
@@ -104,8 +107,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </nav>
 
-        {/* Quick Wheel Switcher & Actions */}
+        {/* Quick Wheel Switcher, Name Tag Badge & Actions */}
         <div className="flex items-center gap-2">
+          {/* Active Name Tag Badge */}
+          <NameTagBadge onNameTagChange={onNameTagChange} />
+
           {/* Quick Active Wheel Dropdown */}
           <div className="relative">
             <button

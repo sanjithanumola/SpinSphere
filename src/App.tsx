@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Wheel, WheelOption, SpinRecord, DecisionMode, ExtraTool } from './types';
+import { Wheel, WheelOption, SpinRecord, DecisionMode, ExtraTool, UserNameTag } from './types';
 import { PRESET_WHEELS } from './data/presets';
 import {
   loadSavedWheels,
@@ -29,6 +29,11 @@ export default function App() {
   const [spinHistory, setSpinHistory] = useState<SpinRecord[]>([]);
   const [activeTool, setActiveTool] = useState<ExtraTool>('wheel');
   const [currentMode, setCurrentMode] = useState<DecisionMode>('classic');
+  const [activeNameTag, setActiveNameTag] = useState<UserNameTag>({
+    name: 'Spinner Host',
+    role: 'Decision Maker',
+    color: '#06b6d4',
+  });
 
   const [winnerModalOption, setWinnerModalOption] = useState<WheelOption | null>(null);
   const [isAISuggestOpen, setIsAISuggestOpen] = useState(false);
@@ -154,6 +159,7 @@ export default function App() {
       winnerColor: winner.color,
       timestamp: Date.now(),
       mode: currentMode,
+      spinnerNameTag: activeNameTag.name,
     };
 
     const updatedHistory = addSpinRecord(record);
@@ -225,6 +231,7 @@ export default function App() {
         setActiveTool={setActiveTool}
         onShareWheel={handleShareWheel}
         onExportImage={handleExportImage}
+        onNameTagChange={setActiveNameTag}
       />
 
       {/* Main Content Area */}
@@ -240,6 +247,7 @@ export default function App() {
                 isSpinning={isSpinning}
                 setIsSpinning={setIsSpinning}
                 canvasRefOut={canvasRef}
+                activeNameTag={activeNameTag}
               />
             </div>
 
